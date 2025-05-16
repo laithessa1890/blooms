@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link" // ✅ ضروري
 import Slider from "./components/Slider"
 import CategoriesGrid from "./components/CategoriesGrid"
 import NewBooks from "./components/NewBooks"
@@ -80,13 +81,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ✅ تعديل هاد الجزء */}
       <div className="mt-10 text-center">
-        <a
+        <Link
           href="/books"
           className="inline-block bg-[#C05370] text-white px-6 py-3 rounded-full hover:bg-[#a8405b] transition"
         >
           عرض جميع الكتب
-        </a>
+        </Link>
       </div>
     </main>
   )
