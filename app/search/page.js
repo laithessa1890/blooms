@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import SearchPage from './SearchPage'
+import SearchPage from './SearchPage' // ✅ هي الصح
 
 export default function Page() {
   return (
