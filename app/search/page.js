@@ -30,7 +30,9 @@ export default function SearchPage() {
 
   return (
     <section className="px-6 py-10 text-right" dir="rtl">
-      <h1 className="text-2xl font-bold mb-4 text-[#4C7A68]">🔍 نتائج البحث عن: "{query}"</h1>
+      <h1 className="text-2xl font-bold mb-4 text-[#4C7A68]">
+        🔍 نتائج البحث عن: &quot;{query}&quot;
+      </h1>
 
       {loading ? (
         <p>...جارٍ تحميل النتائج</p>
