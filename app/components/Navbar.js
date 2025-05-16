@@ -4,9 +4,12 @@ import Link from 'next/link'
 import { FiSearch, FiShoppingBag } from 'react-icons/fi'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Navbar() {
   const [cartCount, setCartCount] = useState(0)
+  const [search, setSearch] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
     const updateCart = () => {
@@ -20,6 +23,14 @@ export default function Navbar() {
     return () => clearInterval(interval)
   }, [])
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (search.trim()) {
+      router.push(`/search?q=${encodeURIComponent(search)}`)
+      setSearch('')
+    }
+  }
+
   return (
     <header className="w-full border-b bg-white" dir="rtl">
       {/* شريط ترحيبي علوي صغير */}
@@ -28,8 +39,8 @@ export default function Navbar() {
       </div>
 
       {/* الشريط الرئيسي */}
-      <div className="flex items-center justify-between px-6 py-3">
-        {/* أيقونات يسار */}
+      <div className="flex flex-col md:flex-row items-center justify-between px-6 py-3 gap-4">
+        {/* يسار: سلة + بحث */}
         <div className="flex items-center gap-4 text-xl text-gray-700 relative">
           <Link href="/cart" className="relative">
             <FiShoppingBag className="cursor-pointer" />
@@ -39,12 +50,22 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <Link href="/search">
-            <FiSearch className="cursor-pointer" />
-          </Link>
+
+          <form onSubmit={handleSearch} className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="ابحث عن كتاب..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-2 py-1 border rounded text-sm w-40 md:w-52"
+            />
+            <button type="submit" className="text-[#4C7A68] hover:text-[#C05370]">
+              <FiSearch />
+            </button>
+          </form>
         </div>
 
-        {/* الشعار في المركز */}
+        {/* الشعار في المنتصف */}
         <div className="flex items-center gap-2">
           <span className="text-lg font-bold text-[#C05370]">Blooms</span>
           <Image
