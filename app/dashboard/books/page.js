@@ -19,7 +19,7 @@ export default function BooksDashboard() {
       .order('created_at', { ascending: false })
 
     if (error) {
-      alert('فشل في تحميل الكتب 😢')
+      alert('فشل في تحميل الكتب ')
       console.error(error)
     } else {
       setBooks(data)
@@ -37,7 +37,7 @@ export default function BooksDashboard() {
       alert('حدث خطأ أثناء الحذف')
       console.error(error)
     } else {
-      // حذف من الواجهة مباشرة
+     
       setBooks(prev => prev.filter(book => book.id !== id))
     }
   }
