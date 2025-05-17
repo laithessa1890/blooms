@@ -21,6 +21,12 @@ const topBooks = [
     price: 350000,
     image: '/adgfadfg.jpg',
   },
+   {
+    id: 4,
+    title: ' متجر دالجوت',
+    price: 35000,
+    image: '/206084346.jpg',
+  },
 ]
 
 export default function TopBooks() {
@@ -32,15 +38,15 @@ export default function TopBooks() {
 
   return (
     <section className="px-4 py-10 space-y-6 bg-[#F4EDE4]" dir="rtl">
-      <h2 className="text-3xl font-bold text-[#C05370] text-center mb-6">📈 الأكثر مبيعًا هذا الشهر</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold text-[#C05370] text-center mb-6">📈 الأكثر مبيعًا هذا الشهر</h2>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
         {topBooks.map((book) => (
           <div
             key={book.id}
             className="bg-[#EDE3D2] rounded-xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col"
           >
-            <div className="w-full h-72 bg-white flex items-center justify-center p-4">
+            <div className="w-full h-52 sm:h-64 bg-white flex items-center justify-center p-4">
               <img
                 src={book.image}
                 alt={book.title}
@@ -48,12 +54,12 @@ export default function TopBooks() {
               />
             </div>
             <div className="p-4 text-center space-y-2 flex-1">
-              <h3 className="text-lg font-bold text-[#4C7A68]">{book.title}</h3>
-              <p className="text-[#C05370] font-semibold">{book.price.toLocaleString()} ل.س</p>
+              <h3 className="text-sm sm:text-lg font-bold text-[#4C7A68]">{book.title}</h3>
+              <p className="text-sm sm:text-base text-[#C05370] font-semibold">{book.price.toLocaleString()} ل.س</p>
             </div>
             <button
               onClick={() => addToCart(book)}
-              className="bg-[#C05370] text-white py-2 hover:bg-[#a8405b] transition"
+              className="bg-[#C05370] text-white text-sm py-1.5 hover:bg-[#a8405b] transition"
             >
               🛒 أضف إلى السلة
             </button>

@@ -22,7 +22,6 @@ export default function Navbar() {
     return () => clearInterval(interval)
   }, [])
 
-  // البحث الحي
   useEffect(() => {
     const fetchResults = async () => {
       if (!search.trim()) return setResults([])
@@ -40,7 +39,7 @@ export default function Navbar() {
   }, [search])
 
   return (
-    <header className="w-full border-b bg-white z-50 relative" dir="rtl">
+    <header className="hidden md:block w-full border-b bg-white z-50 relative" dir="rtl">
       {/* شريط ترحيبي */}
       <div className="text-xs text-gray-600 text-center py-1 border-b">
         مرحبًا بكم في مكتبة Blooms
@@ -89,7 +88,6 @@ export default function Navbar() {
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C05370]"
             />
 
-            {/* النتائج */}
             {search && results.length > 0 && (
               <div className="absolute bg-white border mt-1 rounded shadow w-full max-h-60 overflow-y-auto z-50">
                 {results.map(book => (
@@ -105,7 +103,6 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* لا يوجد نتائج */}
             {search && results.length === 0 && (
               <div className="absolute bg-white border mt-1 rounded shadow w-full text-sm text-gray-500 px-4 py-2">
                 لا توجد نتائج

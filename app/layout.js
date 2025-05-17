@@ -1,6 +1,7 @@
 import './globals.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import MobileBottomNav from './components/MobileBottomNav'
 
 export const metadata = {
   title: 'Blooms Bookstore',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="container mx-auto px-4 py-6">{children}</main>
         <Footer />
+        <MobileBottomNav />
       </body>
     </html>
   )
