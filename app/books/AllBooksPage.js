@@ -53,11 +53,11 @@ export default function AllBooksPage() {
       ) : books.length === 0 ? (
         <p className="text-gray-600">لا توجد كتب في هذا التصنيف.</p>
       ) : (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
           {books.map(book => (
             <div key={book.id} className="bg-white rounded-xl shadow hover:shadow-md transition flex flex-col overflow-hidden">
               <Link href={`/books/${book.id}`} className="flex-1">
-                <div className="relative w-full h-80 bg-gray-100">
+                <div className="relative w-full h-72 bg-gray-100">
                   <Image
                     src={book.image || '/placeholder.jpg'}
                     alt={book.title}
@@ -66,9 +66,13 @@ export default function AllBooksPage() {
                   />
                 </div>
                 <div className="p-4 space-y-1">
-                  <h3 className="text-lg font-bold text-[#4C7A68]">{book.title}</h3>
+                  <h3 className="text-md font-bold text-[#4C7A68]">{book.title}</h3>
                   <p className="text-sm text-gray-500">{book.category}</p>
-                  {book.price && <p className="text-sm text-[#C05370] font-semibold">{book.price} ل.س</p>}
+                  {book.price && (
+                    <p className="text-sm text-[#C05370] font-semibold">
+                      {book.price.toLocaleString()} ل.س
+                    </p>
+                  )}
                 </div>
               </Link>
               <button

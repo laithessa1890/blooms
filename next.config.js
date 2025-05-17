@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['m.media-amazon.com',
-      'www.google.com',
-      "elrqbhugwvvaguzqzvwm.supabase.co"
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'elrqbhugwvvaguzqzvwm.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
     ],
   },
 }
