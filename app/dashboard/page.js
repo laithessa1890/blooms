@@ -56,6 +56,22 @@ export default function Dashboard() {
           ⚙️ الإعدادات العامة
         </Link>
 
+        {/* المجموعات */}
+        <Link
+          href="/dashboard/add-series"
+          className="bg-white border border-[#1E90FF] text-[#1E90FF] hover:bg-[#1E90FF] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold"
+        >
+          📦 إدارة المجموعات (سلاسل)
+        </Link>
+
+        {/* العروض */}
+        <Link
+          href="/dashboard/offers"
+          className="bg-white border border-[#FF7F50] text-[#FF7F50] hover:bg-[#FF7F50] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold"
+        >
+          🎁 إدارة العروض المميزة
+        </Link>
+
         {/* تسجيل الخروج */}
         <button
           onClick={handleLogout}

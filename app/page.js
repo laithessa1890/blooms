@@ -4,6 +4,7 @@ import Link from "next/link" // ✅ ضروري
 import Slider from "./components/Slider"
 import CategoriesGrid from "./components/CategoriesGrid"
 import NewBooks from "./components/NewBooks"
+import LatestSeries from "./components/LatestSeries"
 
 import { useState } from "react"
 
@@ -43,6 +44,8 @@ export default function Home() {
       <Slider />
       <NewBooks />
       <CategoriesGrid />
+      <LatestSeries />
+
 
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-[#C05370]">مكتبة Blooms</h1>
