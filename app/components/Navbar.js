@@ -76,6 +76,9 @@ export default function Navbar() {
           <nav className="flex items-center gap-6 text-gray-800 text-sm font-medium">
             <Link href="/" className="hover:underline">الرئيسية</Link>
             <Link href="/books" className="hover:underline">الكتب</Link>
+            <Link href="/books" className="hover:underline">المنتجات</Link>
+            
+
           </nav>
 
           {/* حقل البحث */}

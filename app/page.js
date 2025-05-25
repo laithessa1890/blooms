@@ -7,6 +7,7 @@ import NewBooks from "./components/NewBooks"
 import LatestSeries from "./components/LatestSeries"
 
 import { useState } from "react"
+import MobileSearchBar from "./components/MobileSearchBar"
 
 export default function Home() {
   const [books] = useState([
@@ -41,6 +42,7 @@ export default function Home() {
 
   return (
     <main className="bg-[#F4EDE4] min-h-screen px-4 py-8 text-right" dir="rtl">
+      <MobileSearchBar />
       <Slider />
       <NewBooks />
       <CategoriesGrid />
