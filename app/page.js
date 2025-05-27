@@ -8,6 +8,10 @@ import LatestSeries from "./components/LatestSeries"
 
 import { useState } from "react"
 import MobileSearchBar from "./components/MobileSearchBar"
+import WhyUs from "./components/WhyUs"
+import BannerOffer from "./components/BannerOffer"
+import RequestBook from "./components/RequestBook"
+import PrintCostCalculator from "./components/PrintCostCalculator"
 
 export default function Home() {
   const [books] = useState([
@@ -42,12 +46,15 @@ export default function Home() {
 
   return (
     <main className="bg-[#F4EDE4] min-h-screen px-4 py-8 text-right" dir="rtl">
+            <BannerOffer />
+
       <MobileSearchBar />
       <Slider />
       <NewBooks />
       <CategoriesGrid />
       <LatestSeries />
-
+      <WhyUs/>
+      
 
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-[#C05370]">مكتبة Blooms</h1>
@@ -95,6 +102,11 @@ export default function Home() {
           عرض جميع الكتب
         </Link>
       </div>
+            
+            <RequestBook/>
+            <PrintCostCalculator />
+            
+
     </main>
   )
 }

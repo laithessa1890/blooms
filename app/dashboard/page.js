@@ -47,6 +47,12 @@ export default function Dashboard() {
         >
           📈 التقارير والإحصائيات
         </Link>
+        <Link
+  href="/dashboard/missing-books"
+  className="bg-white border border-[#E56B6F] text-[#E56B6F] hover:bg-[#E56B6F] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold"
+>
+  🔍 عرض طلبات الكتب الغير موجودة
+</Link>
 
         {/* الإعدادات */}
         <Link
