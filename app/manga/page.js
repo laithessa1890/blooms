@@ -10,7 +10,10 @@ export default function MangaPage() {
 
   useEffect(() => {
     const fetchManga = async () => {
-      const { data, error } = await supabase.from('manga').select('*').order('created_at', { ascending: false })
+      const { data, error } = await supabase
+        .from('manga')
+        .select('*')
+        .order('created_at', { ascending: false })
       if (!error) setMangaList(data)
     }
 
@@ -26,11 +29,12 @@ export default function MangaPage() {
   return (
     <main className="bg-[#F4EDE4] min-h-screen px-4 py-8 text-right" dir="rtl">
       <h1 className="text-3xl font-bold text-[#C05370] mb-6 text-center">📚 كل المانجا</h1>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {mangaList.map((manga) => (
           <div key={manga.id} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
             <Link href={`/manga/${manga.id}`}>
-              <div className="relative w-full h-64 bg-gray-100 cursor-pointer">
+              <div className="relative w-full h-56 bg-gray-100 cursor-pointer">
                 <Image
                   src={manga.image}
                   alt={manga.title}
@@ -39,12 +43,14 @@ export default function MangaPage() {
                 />
               </div>
             </Link>
+
             <div className="p-4 space-y-1 flex-1">
               <h3 className="text-md font-bold text-[#C05370]">{manga.title}</h3>
-              <p className="text-sm text-gray-600">📖 عدد الفصول: {manga.chapters}</p>
+              <p className="text-sm text-gray-600">📖 عدد المجلدات: {manga.chapters}</p>
               <p className="text-sm text-gray-700">💰 {manga.price.toLocaleString()} ل.س</p>
             </div>
-            
+
+          
           </div>
         ))}
       </div>
