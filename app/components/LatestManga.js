@@ -27,8 +27,8 @@ export default function LatestManga() {
   return (
     <section className="px-6 py-10 text-right" dir="rtl">
       <h2 className="text-3xl font-bold text-[#C05370] mb-6">📚 مانجا جديدة</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {manga.map(item => (
+      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+        {manga.slice(0, 3).map(item => (
           <Link
             href={`/manga/${item.id}`}
             key={item.id}
@@ -49,10 +49,10 @@ export default function LatestManga() {
           </Link>
         ))}
 
-        {/* زر عرض الكل */}
+        {/* الكرت الرابع لعرض الكل */}
         <Link
           href="/manga"
-          className="flex justify-center items-center border-2 border-dashed border-[#C05370] rounded-xl text-[#C05370] text-lg font-semibold hover:bg-[#F4EDE4] transition"
+          className="flex justify-center items-center text-center bg-white rounded-xl border-2 border-dashed border-[#C05370] text-[#C05370] text-lg font-semibold hover:bg-[#F4EDE4] transition"
         >
           👀 عرض كل المانجا
         </Link>
