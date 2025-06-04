@@ -1,21 +1,21 @@
-"use client"
+'use client'
 
-import Image from "next/image"
-import Link from "next/link"
-import Slider from "./components/Slider"
-import CategoriesGrid from "./components/CategoriesGrid"
-import NewBooks from "./components/NewBooks"
+import Image from 'next/image'
+import Link from 'next/link'
+import Slider from './components/Slider'
+import CategoriesGrid from './components/CategoriesGrid'
+import NewBooks from './components/NewBooks'
 
-import { useState } from "react"
-import MobileSearchBar from "./components/MobileSearchBar"
-import WhyUs from "./components/WhyUs"
-import BannerOffer from "./components/BannerOffer"
-import RequestBook from "./components/RequestBook"
-import PrintCostCalculator from "./components/PrintCostCalculator"
-import { motion } from "framer-motion"
-import LatestManga from "./components/LatestManga"
-import LatestSeries from "./components/LatestSeries"
-import HomeDiscountedBooks from "./components/HomeDiscountedBooks"
+import { useState } from 'react'
+import MobileSearchBar from './components/MobileSearchBar'
+import WhyUs from './components/WhyUs'
+import BannerOffer from './components/BannerOffer'
+import RequestBook from './components/RequestBook'
+import PrintCostCalculator from './components/PrintCostCalculator'
+import { motion } from 'framer-motion'
+import LatestManga from './components/LatestManga'
+import LatestSeries from './components/LatestSeries'
+import HomeDiscountedBooks from './components/HomeDiscountedBooks'
 
 const sectionVariant = {
   hidden: { opacity: 0, y: 40 },
@@ -34,15 +34,15 @@ export default function Home() {
   const [books] = useState([
     {
       id: 1,
-      title: "ONYX STORM",
-      author: "rebecca yarros ",
+      title: 'ONYX STORM',
+      author: 'rebecca yarros ',
       price: 450000,
       image: '/$_57.jpeg',
     },
     {
       id: 2,
-      title: "STORY OF MY LIFE",
-      author: "LUCY SCORE",
+      title: 'STORY OF MY LIFE',
+      author: 'LUCY SCORE',
       price: 280000,
       image: '/9781728297057.jpeg',
     },
@@ -77,12 +77,11 @@ export default function Home() {
       <motion.div variants={sectionVariant}><Slider /></motion.div>
       <motion.div variants={sectionVariant}><NewBooks /></motion.div>
       <motion.div variants={sectionVariant}><LatestSeries /></motion.div>
-      <HomeDiscountedBooks />
+      <motion.div variants={sectionVariant}><HomeDiscountedBooks /></motion.div>
       <motion.div variants={sectionVariant}><CategoriesGrid /></motion.div>
       <motion.div variants={sectionVariant}><LatestManga /></motion.div>
       <motion.div variants={sectionVariant}><WhyUs /></motion.div>
       <motion.div variants={sectionVariant}><RequestBook /></motion.div>
-      
     </motion.main>
   )
 }
