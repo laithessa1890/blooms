@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
 export default function LatestManga() {
   const [manga, setManga] = useState([])
@@ -27,7 +29,9 @@ export default function LatestManga() {
   return (
     <section className="px-6 py-10 text-right" dir="rtl">
       <h2 className="text-3xl font-bold text-[#C05370] mb-6">📚 مانجا جديدة</h2>
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+
+      {/* على الشاشات الكبيرة: شبكة */}
+      <div className="hidden sm:grid grid-cols-2 gap-4 sm:gap-6">
         {manga.slice(0, 3).map(item => (
           <Link
             href={`/manga/${item.id}`}
@@ -56,6 +60,46 @@ export default function LatestManga() {
         >
           👀 عرض كل المانجا
         </Link>
+      </div>
+
+      {/* على الشاشات الصغيرة: سلايدر */}
+      <div className="sm:hidden">
+        <Swiper
+          spaceBetween={16}
+          slidesPerView={1.2}
+          className="pb-6"
+        >
+          {manga.map(item => (
+            <SwiperSlide key={item.id}>
+              <Link
+                href={`/manga/${item.id}`}
+                className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden"
+              >
+                <div className="relative w-full h-56 bg-gray-100">
+                  <Image
+                    src={item.image || '/placeholder.jpg'}
+                    alt={item.title}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-[#4C7A68] text-lg">{item.title}</h3>
+                  <p className="text-sm text-gray-500 line-clamp-2">{item.description}</p>
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        <div className="mt-4">
+          <Link
+            href="/manga"
+            className="block w-full text-center bg-white border-2 border-dashed border-[#C05370] text-[#C05370] text-lg font-semibold py-3 rounded-xl hover:bg-[#F4EDE4] transition"
+          >
+            👀 عرض كل المانجا
+          </Link>
+        </div>
       </div>
     </section>
   )

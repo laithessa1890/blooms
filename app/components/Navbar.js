@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { FiShoppingBag } from 'react-icons/fi'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
@@ -10,13 +9,14 @@ export default function Navbar() {
   const [cartCount, setCartCount] = useState(0)
   const [search, setSearch] = useState('')
   const [results, setResults] = useState([])
+  const [user, setUser] = useState(null)
+  const [userMeta, setUserMeta] = useState(null)
 
   useEffect(() => {
     const updateCart = () => {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]')
       setCartCount(cart.length)
     }
-
     updateCart()
     const interval = setInterval(updateCart, 1000)
     return () => clearInterval(interval)
@@ -38,16 +38,34 @@ export default function Navbar() {
     return () => clearTimeout(delayDebounce)
   }, [search])
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      setUser(user)
+      if (user) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+        setUserMeta(data)
+      }
+    }
+    fetchUser()
+  }, [])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+    setUserMeta(null)
+  }
+
   return (
     <header className="hidden md:block w-full border-b bg-white z-50 relative" dir="rtl">
-      {/* شريط ترحيبي */}
       <div className="text-xs text-gray-600 text-center py-1 border-b">
         مرحبًا بكم في مكتبة Blooms
       </div>
 
-      {/* الشريط الرئيسي */}
       <div className="flex items-center justify-between px-6 py-3 relative">
-        {/* أيقونات يسار */}
+        {/* يسار */}
         <div className="flex items-center gap-4 text-xl text-gray-700 relative">
           <Link href="/cart" className="relative">
             <FiShoppingBag className="cursor-pointer" />
@@ -59,29 +77,35 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* الشعار */}
+        {/* وسط */}
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-[#C05370]">Blooms</span>
-          <Image
-            src="/logo.png"
-            alt="Blooms Logo"
-            width={32}
-            height={32}
-            className="object-contain"
-          />
+          <span className="text-2xl font-bold text-[#C05370]">📚 Blooms Bookstore</span>
         </div>
 
-        {/* روابط + بحث */}
-        <div className="flex flex-col items-end gap-2">
-          <nav className="flex items-center gap-6 text-gray-800 text-sm font-medium">
+        {/* يمين */}
+        <div className="flex flex-col items-end gap-2 text-sm">
+          <nav className="flex items-center gap-4 text-gray-800 font-medium">
             <Link href="/" className="hover:underline">الرئيسية</Link>
             <Link href="/books" className="hover:underline">الكتب</Link>
-            <Link href="/books" className="hover:underline">المنتجات</Link>
-            
+            <Link href="/manga" className="hover:underline">المانجا</Link>
+            <Link href="/offers" className="hover:underline">العروض</Link>
 
+            {!user ? (
+              <>
+                <Link href="/account/register" className="hover:underline text-[#C05370]">تسجيل حساب</Link>
+                <Link href="/account/login" className="hover:underline">تسجيل الدخول</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/account" className="hover:underline text-[#4C7A68]">
+                  👤 {userMeta?.full_name || user.email}
+                </Link>
+                <button onClick={handleLogout} className="text-red-600 hover:underline">تسجيل الخروج</button>
+              </>
+            )}
           </nav>
 
-          {/* حقل البحث */}
+          {/* بحث */}
           <div className="relative w-64">
             <input
               type="text"
@@ -90,7 +114,6 @@ export default function Navbar() {
               placeholder="🔍 ابحث عن كتاب..."
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#C05370]"
             />
-
             {search && results.length > 0 && (
               <div className="absolute bg-white border mt-1 rounded shadow w-full max-h-60 overflow-y-auto z-50">
                 {results.map(book => (
@@ -105,7 +128,6 @@ export default function Navbar() {
                 ))}
               </div>
             )}
-
             {search && results.length === 0 && (
               <div className="absolute bg-white border mt-1 rounded shadow w-full text-sm text-gray-500 px-4 py-2">
                 لا توجد نتائج

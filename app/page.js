@@ -14,6 +14,21 @@ import RequestBook from "./components/RequestBook"
 import PrintCostCalculator from "./components/PrintCostCalculator"
 import { motion } from "framer-motion"
 import LatestManga from "./components/LatestManga"
+import LatestSeries from "./components/LatestSeries"
+import HomeDiscountedBooks from "./components/HomeDiscountedBooks"
+
+const sectionVariant = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.6,
+      ease: 'easeOut',
+    },
+  }),
+}
 
 export default function Home() {
   const [books] = useState([
@@ -48,73 +63,26 @@ export default function Home() {
 
   return (
     <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+      }}
       className="bg-[#F4EDE4] min-h-screen px-4 py-8 text-right"
       dir="rtl"
     >
-      <BannerOffer />
-      <MobileSearchBar />
-      <Slider />
-      <NewBooks />
-      <CategoriesGrid />
-      <LatestManga />
-      <WhyUs />
-
-      <header className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-[#C05370]">مكتبة Blooms</h1>
-        <p className="text-gray-700 mt-2 text-lg">مكتبتك للكتب المميزة 🌸</p>
-      </header>
-
-      <section className="mt-12">
-        <h2 className="text-2xl text-[#C05370] font-semibold mb-4">✨ إصدارات خاصة (Special Editions)</h2>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {books.map((book, index) => (
-            <motion.div
-              key={book.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col"
-            >
-              <div className="relative w-full h-64 bg-gray-100">
-                <Image
-                  src={book.image}
-                  alt={book.title}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="p-4 space-y-1 flex-1">
-                <h3 className="text-md font-bold text-[#C05370]">{book.title}</h3>
-                <p className="text-sm text-gray-500">{book.author}</p>
-                <p className="text-sm text-gray-600">💰 {book.price.toLocaleString()} ل.س</p>
-              </div>
-              <button
-                onClick={() => addToCart(book)}
-                className="bg-[#C05370] text-white py-2 hover:bg-[#a8405b] transition text-sm font-medium"
-              >
-                🛒 أضف إلى السلة
-              </button>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      <div className="mt-10 text-center">
-        <Link
-          href="/books"
-          className="inline-block bg-[#C05370] text-white px-6 py-3 rounded-full hover:bg-[#a8405b] transition"
-        >
-          عرض جميع الكتب
-        </Link>
-      </div>
+      <motion.div variants={sectionVariant}><BannerOffer /></motion.div>
+      <motion.div variants={sectionVariant}><MobileSearchBar /></motion.div>
+      <motion.div variants={sectionVariant}><Slider /></motion.div>
+      <motion.div variants={sectionVariant}><NewBooks /></motion.div>
+      <motion.div variants={sectionVariant}><LatestSeries /></motion.div>
+      <HomeDiscountedBooks />
+      <motion.div variants={sectionVariant}><CategoriesGrid /></motion.div>
+      <motion.div variants={sectionVariant}><LatestManga /></motion.div>
+      <motion.div variants={sectionVariant}><WhyUs /></motion.div>
+      <motion.div variants={sectionVariant}><RequestBook /></motion.div>
       
-
-      <RequestBook />
-      <PrintCostCalculator />
-
     </motion.main>
   )
 }

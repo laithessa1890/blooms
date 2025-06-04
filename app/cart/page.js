@@ -19,6 +19,28 @@ export default function CartPage() {
     setCart(storedCart)
   }, [])
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      if (profile) {
+        setName(profile.name || '')
+        setPhone(profile.phone || '')
+        setLocationType(profile.location_type || 'damascus')
+        setArea(profile.location_type === 'damascus' ? profile.location_details : '')
+        if (profile.location_type === 'outside') {
+          const [prov, br] = profile.location_details.split(' - فرع القدموس: ')
+          setProvince(prov || '')
+          setBranch(br || '')
+        }
+      }
+    }
+
+    fetchProfile()
+  }, [])
+
   const removeFromCart = (index) => {
     const updatedCart = [...cart]
     updatedCart.splice(index, 1)
@@ -53,8 +75,11 @@ export default function CartPage() {
 
     setLoading(true)
 
+    const { data: { user } } = await supabase.auth.getUser()
+
     const { error } = await supabase.from('orders').insert([
       {
+        user_id: user?.id || null,
         name,
         phone,
         note,
@@ -69,7 +94,7 @@ export default function CartPage() {
     setLoading(false)
 
     if (error) {
-      console.error(error)
+      console.error('🛑 Supabase Error:', error.message, error.details)
       alert('حدث خطأ أثناء إرسال الطلب ❌')
     } else {
       alert('✅ تم إرسال الطلب بنجاح!')

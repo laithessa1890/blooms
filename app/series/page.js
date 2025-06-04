@@ -33,15 +33,14 @@ export default function AllSeriesPage() {
   }
 
   return (
-    <section className="px-6 py-10 text-right" dir="rtl">
-      <h1 className="text-3xl font-bold text-[#4C7A68] mb-6">📦 جميع السلاسل</h1>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <section className="px-4 py-10 text-right" dir="rtl">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#4C7A68] mb-6">📦 جميع السلاسل</h1>
+      <div className="grid gap-4 sm:gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {series.map((item) => (
           <div
             key={item.id}
             className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col"
           >
-            {/* رابط التفاصيل */}
             <Link href={`/series/${item.id}`} className="flex-1 block">
               <div className="relative w-full aspect-[2/3] bg-gray-100">
                 <Image
@@ -52,8 +51,8 @@ export default function AllSeriesPage() {
                 />
               </div>
               <div className="p-4 text-center space-y-2">
-                <h3 className="text-lg font-bold text-[#4C7A68]">{item.title}</h3>
-                <p className="text-sm text-gray-500 line-clamp-2">{item.description}</p>
+                <h3 className="text-base sm:text-lg font-bold text-[#4C7A68]">{item.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">{item.description}</p>
                 <p className="text-[#C05370] font-semibold">{item.price?.toLocaleString()} ل.س</p>
               </div>
             </Link>
