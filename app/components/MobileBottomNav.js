@@ -6,7 +6,6 @@ import {
   FiShoppingCart,
   FiGrid,
   FiUser,
-  FiBox,
   FiTag
 } from 'react-icons/fi'
 import { useEffect, useState } from 'react'
@@ -25,28 +24,27 @@ export default function MobileBottomNav() {
   }, [])
 
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-white border-t z-50 shadow flex justify-around items-center h-16 md:hidden text-xs">
-      <Link href="/" className="flex flex-col items-center text-gray-700">
+    <div className="fixed bottom-0 inset-x-0 bg-white border-t z-50 shadow flex justify-around items-center h-16 md:hidden text-xs font-semibold">
+      {/* الرئيسية */}
+      <Link href="/" className="flex flex-col items-center text-gray-600 hover:text-[#C05370] transition">
         <FiHome className="text-xl mb-0.5" />
         <span>الرئيسية</span>
       </Link>
 
-      <Link href="/categories" className="flex flex-col items-center text-gray-700">
+      {/* التصنيفات */}
+      <Link href="/categories" className="flex flex-col items-center text-gray-600 hover:text-[#C05370] transition">
         <FiGrid className="text-xl mb-0.5" />
         <span>التصنيفات</span>
       </Link>
 
-      <Link href="/series" className="flex flex-col items-center text-gray-700">
-        <FiBox className="text-xl mb-0.5" />
-        <span>السلاسل</span>
-      </Link>
-
-      <Link href="/offers" className="flex flex-col items-center text-gray-700">
+      {/* العروض */}
+      <Link href="/offers" className="flex flex-col items-center text-gray-600 hover:text-[#C05370] transition">
         <FiTag className="text-xl mb-0.5" />
         <span>العروض</span>
       </Link>
 
-      <Link href="/cart" className="relative flex flex-col items-center text-gray-700">
+      {/* السلة */}
+      <Link href="/cart" className="relative flex flex-col items-center text-gray-600 hover:text-[#C05370] transition">
         <FiShoppingCart className="text-xl mb-0.5" />
         {cartCount > 0 && (
           <span className="absolute -top-1 -left-2 bg-red-600 text-white text-xs font-bold rounded-full px-1.5">
@@ -56,7 +54,8 @@ export default function MobileBottomNav() {
         <span>السلة</span>
       </Link>
 
-      <Link href="/account" className="flex flex-col items-center text-gray-700">
+      {/* حسابي */}
+      <Link href="/account" className="flex flex-col items-center text-gray-600 hover:text-[#C05370] transition">
         <FiUser className="text-xl mb-0.5" />
         <span>حسابي</span>
       </Link>

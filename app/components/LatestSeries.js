@@ -8,62 +8,51 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 
-export default function HomeDiscountedBooks() {
-  const [books, setBooks] = useState([])
+export default function LatestSeries() {
+  const [series, setSeries] = useState([])
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchSeries = async () => {
       const { data, error } = await supabase
-        .from('books')
+        .from('series')
         .select('*')
-        .eq('is_discounted', true)
         .order('created_at', { ascending: false })
         .limit(4)
 
-      if (!error) setBooks(data)
+      if (!error) setSeries(data)
     }
 
-    fetchBooks()
+    fetchSeries()
   }, [])
 
-  const addToCart = (book) => {
+  const addToCart = (item) => {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-    if (!cart.find(b => b.id === book.id)) {
-      cart.push({
-        id: book.id,
-        title: book.title,
-        price: book.discount_price || book.price,
-        image: book.image
-      })
-      localStorage.setItem('cart', JSON.stringify(cart))
-      alert('✅ تمت إضافة الكتاب للسلة')
-    } else {
-      alert('📚 هذا الكتاب موجود مسبقًا في السلة')
-    }
+    localStorage.setItem('cart', JSON.stringify([...cart, {
+      id: `series-${item.id}`,
+      title: item.title,
+      price: item.price,
+      image: item.image
+    }]))
+    alert(`✅ تمت إضافة "${item.title}" إلى السلة`)
   }
 
-  if (!books.length) return null
+  if (!series.length) return null
 
-  const BookCard = ({ book }) => (
-    <div className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col h-full relative">
-      <span className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded">خصم</span>
-      <Link href={`/books/${book.id}`} className="relative w-full h-56 bg-gray-100 block">
+  const SeriesCard = ({ item }) => (
+    <div className="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col h-full">
+      <Link href={`/series/${item.id}`} className="relative w-full h-56 bg-gray-100 block">
         <Image
-          src={book.image || '/placeholder.jpg'}
-          alt={book.title}
+          src={item.image}
+          alt={item.title}
           fill
           className="object-contain"
         />
       </Link>
       <div className="p-4 flex-1 flex flex-col justify-between">
-        <h3 className="font-bold text-[#4C7A68] text-sm mb-1 line-clamp-2">{book.title}</h3>
-        <p className="text-xs text-gray-500 line-clamp-2 mb-2">{book.description}</p>
-        <p className="text-sm text-[#C05370] font-semibold mb-2">
-          <span className="line-through text-gray-400 mr-2">{book.price?.toLocaleString()} ل.س</span>
-          {book.discount_price?.toLocaleString()} ل.س
-        </p>
+        <h3 className="font-bold text-[#4C7A68] text-md mb-1">{item.title}</h3>
+        <p className="text-sm text-gray-500 mb-2">{item.price?.toLocaleString()} ل.س</p>
         <button
-          onClick={() => addToCart(book)}
+          onClick={() => addToCart(item)}
           className="bg-[#C05370] text-white py-2 px-4 rounded text-sm hover:bg-[#a8405b] mt-auto"
         >
           🛒 أضف إلى السلة
@@ -74,16 +63,16 @@ export default function HomeDiscountedBooks() {
 
   return (
     <section className="px-6 py-10 text-right" dir="rtl">
-      <h2 className="text-3xl font-bold text-[#C05370] mb-6">🔥 أحدث العروض</h2>
+      <h2 className="text-3xl font-bold text-[#C05370] mb-6">📦 سلاسل جديدة</h2>
 
-      {/* Grid على الشاشات الكبيرة */}
+      {/* ✅ Grid للديسكتوب */}
       <div className="hidden md:grid grid-cols-4 gap-6">
-        {books.map(book => (
-          <BookCard key={book.id} book={book} />
+        {series.map(item => (
+          <SeriesCard key={item.id} item={item} />
         ))}
       </div>
 
-      {/* سلايدر على الموبايل */}
+      {/* ✅ سلايدر للموبايل */}
       <div className="md:hidden">
         <Swiper
           spaceBetween={16}
@@ -96,21 +85,21 @@ export default function HomeDiscountedBooks() {
           modules={[Autoplay]}
           className="pb-6"
         >
-          {books.map(book => (
-            <SwiperSlide key={book.id}>
-              <BookCard book={book} />
+          {series.map(item => (
+            <SwiperSlide key={item.id}>
+              <SeriesCard item={item} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
 
-      {/* زر عرض كل العروض */}
+      {/* ✅ زر عرض الكل (مشترك) */}
       <div className="mt-6 text-center">
         <Link
-          href="/offers"
+          href="/series"
           className="inline-block border-2 border-dashed border-[#C05370] text-[#C05370] font-semibold text-lg px-6 py-2 rounded-xl hover:bg-[#F4EDE4] transition"
         >
-          👀 عرض كل العروض
+          👀 عرض كل السلاسل
         </Link>
       </div>
     </section>
