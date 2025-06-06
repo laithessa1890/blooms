@@ -77,7 +77,7 @@ export default function Home() {
       <motion.div variants={sectionVariant}><Slider /></motion.div>
       <motion.div variants={sectionVariant}><NewBooks /></motion.div>
             <motion.div variants={sectionVariant}><LatestSeries /></motion.div>
-
+<HomeDiscountedBooks/>
       <motion.div variants={sectionVariant}><CategoriesGrid /></motion.div>
       <motion.div variants={sectionVariant}><LatestManga /></motion.div>
       <motion.div variants={sectionVariant}><WhyUs /></motion.div>
