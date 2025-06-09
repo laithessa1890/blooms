@@ -8,27 +8,27 @@ import 'swiper/css'
 const topBooks = [
   {
     id: 1,
-    title: 'فكر بعقل طفلك',
-    price: 50000,
-    image: '/ASDGFASDG.jpg',
+    title: 'digital marketing strategy',
+    price: 80000,
+    image: '/81NnXHIaXGL.jpg',
   },
   {
     id: 2,
-    title: 'سلسلة مملكة البلاغة',
-    price: 270000,
-    image: '/sdgasdg.JPG',
+    title: 'powerless series',
+    price: 350000,
+    image: '/81p2rIrcUsL._SL1500_.jpg',
   },
   {
     id: 3,
-    title: 'سلسلة حطمني',
+    title: 'MURDLE',
     price: 350000,
-    image: '/adgfadfg.jpg',
+    image: '/719kIyOoYUL._SL1500_.jpg',
   },
   {
     id: 4,
-    title: 'متجر دالجوت',
-    price: 35000,
-    image: '/206084346.jpg',
+    title: 'hunting adeline',
+    price: 160000,
+    image: '/s-l960.webp',
   },
 ]
 
