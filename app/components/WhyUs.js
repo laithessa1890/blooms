@@ -8,56 +8,74 @@ import 'swiper/css'
 export default function WhyUs() {
   const items = [
     {
-      icon: <FaTruck size={24} />,
+      icon: <FaTruck size={22} />,
       title: 'توصيل سريع',
       desc: 'طلبك بيوصل خلال ٢-٣ أيام لباب بيتك.',
     },
     {
-      icon: <FaShieldAlt size={24} />,
-      title: 'دفع آمن',
+      icon: <FaShieldAlt size={22} />,
+      title: 'دفع عند الاستلام',
       desc: 'بتدفع بس يوصل الطلب لعندك.',
     },
     {
-      icon: <FaStar size={24} />,
-      title: 'أفضل جودة',
-      desc: 'جودتنا من الأفضل في سوق الكتب.',
+      icon: <FaStar size={22} />,
+      title: 'جودة عالية',
+      desc: 'اختياراتنا بعناية وجودتنا ممتازة.',
     },
     {
-      icon: <FaUndo size={24} />,
+      icon: <FaUndo size={22} />,
       title: 'ضمان الإرجاع',
-      desc: 'بتقدر ترجع الكتاب إذا فيه مشكلة.',
+      desc: 'بتقدر ترجع المنتج إذا فيه مشكلة.',
     },
   ]
 
-  return (
-    <section className="py-10 px-4 text-center bg-white" dir="rtl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-[#4C7A68] mb-6">
-        لماذا تختارنا؟
-      </h2>
+  const Card = ({ item }) => (
+    <div className="group rounded-3xl border bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition p-5 h-full">
+      <div className="w-12 h-12 rounded-2xl border bg-[#F4EDE4] text-[#C05370] flex items-center justify-center mb-4 mx-auto">
+        {item.icon}
+      </div>
+      <h3 className="font-extrabold text-[#2E2A28] text-base">{item.title}</h3>
+      <p className="text-sm text-gray-600 mt-2 leading-relaxed">{item.desc}</p>
+    </div>
+  )
 
-      <Swiper
-        spaceBetween={12}
-        slidesPerView={2.2}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        className="max-w-3xl mx-auto"
-      >
-        {items.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="bg-[#F9F5F2] rounded-xl shadow-sm p-4 mx-1 flex flex-col items-center text-sm text-gray-700 h-full">
-              <div className="text-[#C05370] bg-[#F4EDE4] p-2 rounded-full mb-3">
-                {item.icon}
-              </div>
-              <h3 className="font-semibold text-base">{item.title}</h3>
-              <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+  return (
+    <section dir="rtl" className="py-10 px-4">
+      <div className="rounded-3xl bg-gradient-to-b from-[#F9F2F4] via-white to-[#F4F7F5] border p-6 md:p-8">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#2E2A28]">
+            لماذا تختار <span className="text-[#4C7A68]">Blooms</span>؟
+          </h2>
+          <p className="text-sm text-gray-600 mt-2">
+            تجربة شراء مريحة — سرعة بالتوصيل، جودة، وثقة
+          </p>
+        </div>
+
+        {/* ✅ Grid للشاشات الكبيرة */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.map((item, idx) => (
+            <Card key={idx} item={item} />
+          ))}
+        </div>
+
+        {/* ✅ Slider للموبايل فقط */}
+        <div className="sm:hidden">
+          <Swiper
+            spaceBetween={12}
+            slidesPerView={1.15}
+            loop
+            autoplay={{ delay: 2400, disableOnInteraction: false }}
+            modules={[Autoplay]}
+            className="max-w-3xl mx-auto pb-2"
+          >
+            {items.map((item, idx) => (
+              <SwiperSlide key={idx}>
+                <Card item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
     </section>
   )
 }

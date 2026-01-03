@@ -2,6 +2,140 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import {
+  FiBookOpen,
+  FiPlusCircle,
+  FiShoppingCart,
+  FiClipboard,
+  FiBarChart2,
+  FiSearch,
+  FiSettings,
+  FiPackage,
+  FiGift,
+  FiLayers,
+  FiLogOut,
+} from 'react-icons/fi'
+
+const cards = [
+  {
+    title: 'إدارة الكتب',
+    desc: 'عرض، تعديل، حذف الكتب',
+    href: '/dashboard/books',
+    icon: FiBookOpen,
+    tag: 'كتب',
+  },
+  {
+    title: 'إضافة كتاب جديد',
+    desc: 'إضافة كتاب مع صورة وسعر وتصنيف',
+    href: '/dashboard/add-book',
+    icon: FiPlusCircle,
+    tag: 'كتب',
+  },
+  {
+    title: 'إدارة المنتجات',
+    desc: 'بوك مارك، فيغرات، إكسسوارات…',
+    href: '/dashboard/products',
+    icon: FiShoppingCart,
+    tag: 'منتجات',
+  },
+  {
+    title: 'إضافة منتج جديد',
+    desc: 'أضف منتج جديد مع التصنيف والسعر',
+    href: '/dashboard/add-product',
+    icon: FiPlusCircle,
+    tag: 'منتجات',
+  },
+  {
+    title: 'عرض الطلبات',
+    desc: 'طلبات العملاء وتفاصيل التوصيل',
+    href: '/dashboard/orders',
+    icon: FiClipboard,
+    tag: 'طلبات',
+  },
+  {
+    title: 'التقارير والإحصائيات',
+    desc: 'مبيعات، طلبات، أفضل المنتجات',
+    href: '/dashboard/reports',
+    icon: FiBarChart2,
+    tag: 'تقارير',
+  },
+  {
+    title: 'طلبات الكتب غير الموجودة',
+    desc: 'طلبات البحث عن كتب غير متوفرة',
+    href: '/dashboard/missing-books',
+    icon: FiSearch,
+    tag: 'طلبات',
+  },
+  {
+    title: 'إدارة المجموعات (سلاسل)',
+    desc: 'تنظيم السلاسل وربط الكتب فيها',
+    href: '/dashboard/add-series',
+    icon: FiPackage,
+    tag: 'محتوى',
+  },
+  {
+    title: 'إدارة العروض المميزة',
+    desc: 'عرض وتعديل خصومات الكتب',
+    href: '/dashboard/offers',
+    icon: FiGift,
+    tag: 'عروض',
+  },
+  {
+    title: 'إضافة مانجا',
+    desc: 'إضافة مانجا جديدة وإدارتها',
+    href: '/dashboard/add-manga',
+    icon: FiLayers,
+    tag: 'محتوى',
+  },
+  {
+    title: 'الإعدادات العامة',
+    desc: 'خيارات الموقع والمحتوى العام',
+    href: '/dashboard/settings',
+    icon: FiSettings,
+    tag: 'إعدادات',
+  },
+]
+
+const tagStyles = {
+  كتب: 'bg-[#F9F2F4] text-[#C05370] border-[#F2D6DE]',
+  منتجات: 'bg-[#EEF6F2] text-[#4C7A68] border-[#D7EAE1]',
+  طلبات: 'bg-[#FFF7E6] text-[#D9A441] border-[#F3E2B8]',
+  تقارير: 'bg-[#F2EEFF] text-[#7851A9] border-[#E0D6FF]',
+  محتوى: 'bg-[#EEF4FF] text-[#1E90FF] border-[#D6E6FF]',
+  عروض: 'bg-[#FFF1EA] text-[#FF7F50] border-[#FFD8C9]',
+  إعدادات: 'bg-gray-50 text-gray-700 border-gray-200',
+}
+
+function AdminCard({ item }) {
+  const Icon = item.icon
+  const tagClass = tagStyles[item.tag] || tagStyles['إعدادات']
+
+  return (
+    <Link
+      href={item.href}
+      className="group rounded-3xl border bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition p-5 flex flex-col gap-3"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="w-11 h-11 rounded-2xl border bg-white flex items-center justify-center">
+          <Icon className="text-xl text-gray-700 group-hover:scale-105 transition" />
+        </div>
+
+        <span className={`text-xs px-3 py-1 rounded-full border ${tagClass}`}>
+          {item.tag}
+        </span>
+      </div>
+
+      <div>
+        <h3 className="text-base font-extrabold text-[#2E2A28]">{item.title}</h3>
+        <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.desc}</p>
+      </div>
+
+      <div className="mt-auto text-sm font-semibold text-[#C05370] group-hover:underline">
+        فتح →
+      </div>
+    </Link>
+  )
+}
 
 export default function Dashboard() {
   const router = useRouter()
@@ -12,43 +146,33 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F4EDE4] text-right px-6 py-10" dir="rtl">
-      <h1 className="text-3xl font-bold text-[#C05370] mb-8">لوحة التحكم 📊</h1>
+    <main dir="rtl" className="min-h-screen bg-gradient-to-b from-[#F9F2F4] via-[#F4EDE4] to-[#F4F7F5]">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-[#2E2A28]">
+              لوحة التحكم <span className="text-[#C05370]">📊</span>
+            </h1>
+            <p className="text-sm text-gray-600 mt-1">
+              إدارة الكتب، المنتجات، الطلبات والعروض من مكان واحد
+            </p>
+          </div>
 
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {/* الكتب */}
-        <Link href="/dashboard/books" className="bg-white border border-[#C05370] text-[#C05370] hover:bg-[#C05370] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">📚 إدارة الكتب</Link>
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-red-200 bg-white/80 text-red-600 hover:bg-red-50 transition w-full md:w-auto"
+          >
+            <FiLogOut /> تسجيل الخروج
+          </button>
+        </div>
 
-        {/* إضافة كتاب */}
-        <Link href="/dashboard/add-book" className="bg-white border border-[#4C7A68] text-[#4C7A68] hover:bg-[#4C7A68] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">➕ إضافة كتاب جديد</Link>
-
-        {/* الطلبات */}
-        <Link href="/dashboard/orders" className="bg-white border border-[#D9A441] text-[#D9A441] hover:bg-[#D9A441] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">🧾 عرض الطلبات</Link>
-
-        {/* التقارير */}
-        <Link href="/dashboard/reports" className="bg-white border border-[#7851A9] text-[#7851A9] hover:bg-[#7851A9] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">📈 التقارير والإحصائيات</Link>
-
-        {/* طلبات الكتب الغير موجودة */}
-        <Link href="/dashboard/missing-books" className="bg-white border border-[#E56B6F] text-[#E56B6F] hover:bg-[#E56B6F] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">🔍 عرض طلبات الكتب الغير موجودة</Link>
-
-        {/* إعدادات عامة */}
-        <Link href="/dashboard/settings" className="bg-white border border-[#999] text-[#555] hover:bg-[#999] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">⚙️ الإعدادات العامة</Link>
-
-        {/* إدارة السلاسل */}
-        <Link href="/dashboard/add-series" className="bg-white border border-[#1E90FF] text-[#1E90FF] hover:bg-[#1E90FF] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">📦 إدارة المجموعات (سلاسل)</Link>
-
-        {/* إدارة العروض */}
-        <Link href="/dashboard/offers" className="bg-white border border-[#FF7F50] text-[#FF7F50] hover:bg-[#FF7F50] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">
-          🎁 إدارة العروض المميزة
-          <br />
-          <span className="text-sm font-normal text-[#FF7F50] group-hover:text-white">🎯 عرض وتعديل خصومات الكتب</span>
-        </Link>
-
-        {/* إضافة مانجا */}
-        <Link href="/dashboard/add-manga" className="bg-white border border-[#8A2BE2] text-[#8A2BE2] hover:bg-[#8A2BE2] hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">🗂️ إضافة مانجا</Link>
-
-        {/* تسجيل الخروج */}
-        <button onClick={handleLogout} className="bg-white border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition px-6 py-8 rounded-xl shadow text-center font-semibold">🚪 تسجيل الخروج</button>
+        {/* Grid */}
+        <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map((item) => (
+            <AdminCard key={item.href} item={item} />
+          ))}
+        </div>
       </div>
     </main>
   )

@@ -1,58 +1,48 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import Slider from './components/Slider'
 import CategoriesGrid from './components/CategoriesGrid'
 import NewBooks from './components/NewBooks'
-
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 import MobileSearchBar from './components/MobileSearchBar'
 import WhyUs from './components/WhyUs'
 import BannerOffer from './components/BannerOffer'
 import RequestBook from './components/RequestBook'
-import PrintCostCalculator from './components/PrintCostCalculator'
-import { motion } from 'framer-motion'
 import LatestManga from './components/LatestManga'
 import LatestSeries from './components/LatestSeries'
 import HomeDiscountedBooks from './components/HomeDiscountedBooks'
 
-const sectionVariant = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 1) => ({
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
     opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.2,
-      duration: 0.6,
-      ease: 'easeOut',
-    },
-  }),
+    transition: { staggerChildren: 0.12 },
+  },
+}
+
+const section = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+}
+
+function Section({ children }) {
+  return (
+    <motion.section
+      variants={section}
+      className="rounded-3xl bg-white/70 backdrop-blur border border-white/60 shadow-sm p-4 md:p-6"
+    >
+      {children}
+    </motion.section>
+  )
 }
 
 export default function Home() {
   const [books] = useState([
-    {
-      id: 1,
-      title: 'ONYX STORM',
-      author: 'rebecca yarros ',
-      price: 450000,
-      image: '/$_57.jpeg',
-    },
-    {
-      id: 2,
-      title: 'STORY OF MY LIFE',
-      author: 'LUCY SCORE',
-      price: 280000,
-      image: '/9781728297057.jpeg',
-    },
-    {
-      id: 3,
-      title: 'WATCH ME',
-      author: 'TAHEREH MAFI',
-      price: 440000,
-      image: '/9780063425187_1_01_1.jpg',
-    },
+    { id: 1, title: 'ONYX STORM', author: 'rebecca yarros ', price: 450000, image: '/$_57.jpeg' },
+    { id: 2, title: 'STORY OF MY LIFE', author: 'LUCY SCORE', price: 280000, image: '/9781728297057.jpeg' },
+    { id: 3, title: 'WATCH ME', author: 'TAHEREH MAFI', price: 440000, image: '/9780063425187_1_01_1.jpg' },
   ])
 
   const addToCart = (book) => {
@@ -65,23 +55,102 @@ export default function Home() {
     <motion.main
       initial="hidden"
       animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-      }}
-      className="bg-[#F4EDE4] min-h-screen px-4 py-8 text-right"
+      variants={container}
+      className="min-h-screen text-right"
       dir="rtl"
     >
-      <motion.div variants={sectionVariant}><BannerOffer /></motion.div>
-      <motion.div variants={sectionVariant}><MobileSearchBar /></motion.div>
-      <motion.div variants={sectionVariant}><Slider /></motion.div>
-      <motion.div variants={sectionVariant}><NewBooks /></motion.div>
-            <motion.div variants={sectionVariant}><LatestSeries /></motion.div>
-<HomeDiscountedBooks/>
-      <motion.div variants={sectionVariant}><CategoriesGrid /></motion.div>
-      <motion.div variants={sectionVariant}><LatestManga /></motion.div>
-      <motion.div variants={sectionVariant}><WhyUs /></motion.div>
-      <motion.div variants={sectionVariant}><RequestBook /></motion.div>
+      {/* خلفية ألطف */}
+      <div className="bg-gradient-to-b from-[#F9F2F4] via-[#F4EDE4] to-[#F4F7F5]">
+        <div className="max-w-6xl mx-auto px-4 py-6 md:py-10 space-y-4 md:space-y-6">
+
+          {/* عرض علوي */}
+          <motion.div variants={section}>
+            <BannerOffer />
+          </motion.div>
+
+          {/* Hero بسيط */}
+          <motion.section
+            variants={section}
+            className="rounded-3xl overflow-hidden border bg-white/70 backdrop-blur shadow-sm"
+          >
+            <div className="p-5 md:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-[#2E2A28]">
+                  أهلاً في <span className="text-[#C05370]">Blooms</span> 📚
+                </h1>
+                <p className="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">
+                  كتب، مانجا، وسلاسل مميزة — توصيات جديدة يوميًا وعروض قوية لفترة محدودة.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/books"
+                  className="px-5 py-2.5 rounded-full bg-[#C05370] text-white hover:opacity-90 transition"
+                >
+                  تصفّح الكتب
+                </Link>
+                <Link
+                  href="/offers"
+                  className="px-5 py-2.5 rounded-full border bg-white hover:bg-gray-50 transition"
+                >
+                  شوف العروض
+                </Link>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* بحث موبايل */}
+          <motion.div variants={section}>
+            <MobileSearchBar />
+          </motion.div>
+
+          {/* سلايدر */}
+          <Section>
+            <Slider />
+          </Section>
+
+          {/* جديد الكتب */}
+          <Section>
+            <NewBooks />
+          </Section>
+
+          {/* أحدث السلاسل */}
+          <Section>
+            <LatestSeries />
+          </Section>
+
+          {/* خصومات (خليه داخل كارد مثل الباقي) */}
+          <Section>
+            <HomeDiscountedBooks />
+          </Section>
+
+          {/* التصنيفات */}
+          <Section>
+            <CategoriesGrid />
+          </Section>
+
+          {/* مانجا */}
+          <Section>
+            <LatestManga />
+          </Section>
+
+          {/* لماذا نحن */}
+          <Section>
+            <WhyUs />
+          </Section>
+
+          {/* طلب كتاب */}
+          <Section>
+            <RequestBook />
+          </Section>
+
+          {/* فوتر صغير اختياري */}
+          <motion.div variants={section} className="text-center text-xs text-gray-500 py-2">
+            © {new Date().getFullYear()} Blooms Bookstore — كل الحقوق محفوظة
+          </motion.div>
+        </div>
+      </div>
     </motion.main>
   )
 }

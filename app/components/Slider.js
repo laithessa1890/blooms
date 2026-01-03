@@ -1,35 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
+import { FiShoppingCart } from 'react-icons/fi'
 
 const topBooks = [
-  {
-    id: 1,
-    title: 'digital marketing strategy',
-    price: 80000,
-    image: '/81NnXHIaXGL.jpg',
-  },
-  {
-    id: 2,
-    title: 'powerless series',
-    price: 350000,
-    image: '/81p2rIrcUsL._SL1500_.jpg',
-  },
-  {
-    id: 3,
-    title: 'MURDLE',
-    price: 350000,
-    image: '/719kIyOoYUL._SL1500_.jpg',
-  },
-  {
-    id: 4,
-    title: 'hunting adeline',
-    price: 160000,
-    image: '/s-l960.webp',
-  },
+  { id: 1, title: 'Digital Marketing Strategy', price: 80000, image: '/81NnXHIaXGL.jpg' },
+  { id: 2, title: 'Powerless Series', price: 350000, image: '/81p2rIrcUsL._SL1500_.jpg' },
+  { id: 3, title: 'MURDLE', price: 350000, image: '/719kIyOoYUL._SL1500_.jpg' },
+  { id: 4, title: 'Hunting Adeline', price: 160000, image: '/s-l960.webp' },
 ]
 
 export default function TopBooks() {
@@ -40,52 +21,73 @@ export default function TopBooks() {
   }
 
   const BookCard = ({ book }) => (
-    <div className="bg-[#EDE3D2] rounded-xl shadow-md overflow-hidden hover:shadow-lg transition flex flex-col">
-      <div className="w-full h-52 sm:h-64 bg-white flex items-center justify-center p-4">
-        <img
+    <div className="group rounded-3xl border bg-white/80 backdrop-blur shadow-sm hover:shadow-md transition overflow-hidden flex flex-col">
+      {/* صورة */}
+      <div className="relative w-full h-52 sm:h-60 bg-gray-50">
+        <Image
           src={book.image}
           alt={book.title}
-          className="max-h-full max-w-full object-contain"
+          fill
+          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 25vw"
+          className="object-contain p-5 transition-transform duration-300 group-hover:scale-[1.03]"
         />
+
+        {/* Badge */}
+        <div className="absolute top-3 right-3">
+          <span className="text-[11px] px-3 py-1 rounded-full bg-white/90 border border-white/60 text-[#C05370] font-bold">
+            الأكثر مبيعًا
+          </span>
+        </div>
       </div>
-      <div className="p-4 text-center space-y-2 flex-1">
-        <h3 className="text-sm sm:text-lg font-bold text-[#4C7A68]">{book.title}</h3>
-        <p className="text-sm sm:text-base text-[#C05370] font-semibold">
-          {book.price.toLocaleString()} ل.س
+
+      {/* معلومات */}
+      <div className="p-4 text-right space-y-2 flex-1">
+        <h3 className="text-sm sm:text-base font-extrabold text-[#2E2A28] line-clamp-2">
+          {book.title}
+        </h3>
+
+        <p className="text-sm sm:text-base text-[#C05370] font-extrabold">
+          {Number(book.price).toLocaleString()} ل.س
         </p>
       </div>
-      <button
-        onClick={() => addToCart(book)}
-        className="bg-[#C05370] text-white text-sm py-1.5 hover:bg-[#a8405b] transition"
-      >
-        🛒 أضف إلى السلة
-      </button>
+
+      {/* زر */}
+      <div className="p-4 pt-0">
+        <button
+          onClick={() => addToCart(book)}
+          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#4C7A68] text-white text-sm py-2.5 hover:opacity-95 transition"
+        >
+          <FiShoppingCart /> أضف إلى السلة
+        </button>
+      </div>
     </div>
   )
 
   return (
-    <section className="px-4 py-10 space-y-6 bg-[#F4EDE4]" dir="rtl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-[#C05370] text-center mb-6">
-        📈 الأكثر مبيعًا هذا الشهر
-      </h2>
+    <section className="space-y-5" dir="rtl">
+      <div className="flex items-end justify-between">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#2E2A28]">
+            📈 الأكثر مبيعًا <span className="text-[#C05370]">هذا الشهر</span>
+          </h2>
+          <p className="text-sm text-gray-600 mt-1">اختيارات مميزة بناءً على طلبات العملاء</p>
+        </div>
+      </div>
 
-      {/* عرض الشبكة على الشاشات الكبيرة */}
-      <div className="hidden sm:grid gap-4 grid-cols-2 md:grid-cols-3">
+      {/* Grid على الشاشات الكبيرة */}
+      <div className="hidden sm:grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {topBooks.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </div>
 
-      {/* سلايدر على الموبايل فقط */}
+      {/* Slider على الموبايل */}
       <div className="sm:hidden">
         <Swiper
-          spaceBetween={16}
-          slidesPerView={1.2}
-          loop={true}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
+          spaceBetween={14}
+          slidesPerView={1.15}
+          loop
+          autoplay={{ delay: 2800, disableOnInteraction: false }}
           modules={[Autoplay]}
           className="pb-6"
         >
