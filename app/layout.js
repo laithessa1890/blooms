@@ -5,16 +5,31 @@ import MobileBottomNav from './components/MobileBottomNav'
 
 export const metadata = {
   title: 'Blooms Bookstore',
-  description: 'مكتبة للكتب المميزة والزهور الأدبية',
+  description: 'مكتبة للكتب المميزة والمنتجات الثقافية المختارة بعناية',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className="bg-[#EDE3D2]">
+      <body className="min-h-screen bg-[#F4EDE4] text-[#2E2A28]">
+        {/* Navbar */}
         <Navbar />
-        <main className="container mx-auto px-4 py-6">{children}</main>
+
+        {/* المحتوى */}
+        <main
+          className="
+            min-h-[calc(100vh-200px)]
+            pt-4
+            pb-24   /* مهم للموبايل حتى ما يغطيه MobileBottomNav */
+          "
+        >
+          {children}
+        </main>
+
+        {/* Footer */}
         <Footer />
+
+        {/* Mobile Bottom Navigation */}
         <MobileBottomNav />
       </body>
     </html>
